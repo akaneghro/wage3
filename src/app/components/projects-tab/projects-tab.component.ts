@@ -9,13 +9,29 @@ import { Project } from 'src/app/models/project';
   styleUrls: ['./projects-tab.component.sass'],
 })
 export class ProjectsTabComponent implements OnInit {
-  @Input() projects: Array<Project>;
+  @Input() openProjects: Array<Project>;
+  @Input() supportedProjects: Array<Project>;
   @Input() typeOfUser: TypesOfUser;
+  projects: Array<Project>;
   tabSelected: TypesOfProjectTab;
   TypesOfProjectTab = TypesOfProjectTab;
   TypesOfUser = TypesOfUser;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.changeProjectTab(TypesOfProjectTab.Open);
+  }
+
+  changeProjectTab(newType: TypesOfProjectTab) {
+    this.tabSelected = newType;
+    switch (newType) {
+      case TypesOfProjectTab.Open:
+        this.projects = this.openProjects;
+        break;
+      case TypesOfProjectTab.Supported:
+        this.projects = this.supportedProjects;
+        break;
+    }
+  }
 }

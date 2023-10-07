@@ -1,23 +1,35 @@
 <wage3-main-card>
-    <label>Current balance</label>
-    <div class="font-extra-large">{{ totalAssets | currency : 'EUR' }}</div>
-    <div>Total assets</div>
-    <div class="invested-today">
-        <label class="invested">Invested</label>
-        <label class="today"> Today</label>
-    </div>
+    <label>Total assets</label>
+    <div class="font-extra-large">{{ (dashboardData.currentBalance + dashboardData.supportingAmount) | currency : 'EUR'
+        }}</div>
+    <!-- <div>Total assets</div> -->
+    <label class="label-left">Available</label>
     <div class="fake-input">
-        <div class="invested-amount">{{ investedAmount | currency : 'EUR' }}</div>
+        <div class="invested-amount">{{ dashboardData.currentBalance | currency : 'EUR' }}</div>
     </div>
+    <label class="label-left">Invested</label>
     <div class="invested-input fake-input">
-        <div class="invested-amount">{{ investedAmount | currency : 'EUR' }}</div>
+        <div class="invested-amount">{{ dashboardData.supportingAmount | currency : 'EUR' }}</div>
 
         <div class="icon-and-earned-today">
-            <img class="icon" src="assets/img/icon-up.jpg" alt=""> <span>{{ earnedToday | currency : 'EUR' }}
+            <img class="icon" src="assets/img/icon-up.svg" alt=""> <span>{{ dashboardData.earnedToday | currency : 'EUR'
+                }}
             </span>
         </div>
     </div>
-    <div class="primary-button w-100">
+    <div class="three-projects">
+        <label for="">
+            Open projects
+        </label>
+        <label for="">
+            Supported
+        </label><label for="">Completed</label>
+        <div class="fake-input">{{dashboardData.numberOfOpenProjects}}</div>
+        <div class="fake-input">{{dashboardData.numberOfSupportedProjects}}</div>
+        <div class="fake-input">{{dashboardData.numberOfCompletedProjects}}</div>
+    </div>
+
+    <div class="primary-button w-100" (click)="emitChangeInMainTabToProjects()">
         View all projects
     </div>
     <!-- CHART -->

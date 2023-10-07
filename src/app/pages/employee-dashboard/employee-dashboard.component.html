@@ -1,8 +1,10 @@
 <wage3-header (changeInMainTabEmitter)="changeInMainTab($event)"
     [typeOfMainTabSelected]="typeOfMainTabSelected"></wage3-header>
 <ng-container *ngIf="typeOfMainTabSelected == TypesOfMainTab.Dashboard; else projectsTab">
-    <wage3-dashboard></wage3-dashboard>
+    <wage3-dashboard [dashboardData]="dashboardData"
+        (changeMainTabToProjects)="changeMainTabToProjects()"></wage3-dashboard>
 </ng-container>
 <ng-template #projectsTab>
-    <wage3-projects-tab *ngIf="projects" [typeOfUser]="typeOfUser" [projects]="projects"></wage3-projects-tab>
+    <wage3-projects-tab *ngIf="openProjects" [typeOfUser]="typeOfUser" [supportedProjects]="supportedProjects"
+        [openProjects]="openProjects"></wage3-projects-tab>
 </ng-template>

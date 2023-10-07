@@ -22,19 +22,32 @@
         [currentNumber]="project.amountAchieved" [maxNumber]="project.amountProposed"></wage3-progress-bar>
     <div class="amounts-and-days-left">
         <div>
-            {{ '1600' | currency : 'EUR'}} / {{ '2000' | currency : 'EUR'}}
+            {{ project.amountAchieved | currency : 'EUR'}} / {{ project.amountProposed | currency : 'EUR'}}
         </div>
         <div>
-            22 days left (15/11/2023)
+            {{timeLeft}} left ({{project.startDate | date }})
         </div>
-        <div>
-            <input class="fake-input-number" type="number">
-        </div>
-        <div>
-            <span></span>
-            <div class="primary-button small">
-                Close
+    </div>
+
+    <ng-container *ngIf="tabSelected == TypesOfProjectTab.Supported">
+        <div class="amount-loaned-and-estimated">
+            <div>
+                <div class="amount-loaned">
+                    {{ project.amountLoaned | currency : 'EUR'}}
+                </div>
+                <div>
+                    Estimated amount: {{ estimatedInterest | currency : 'EUR'}}
+                </div>
             </div>
+            <div class="cancel-button">
+                <div class="outlined-button small">Cancel</div>
+            </div>
+        </div>
+    </ng-container>
+    <div class="input-number-and-button-container">
+        <input class="fake-input-number" type="number">
+        <div class="primary-button small">
+            {{ tabSelected == TypesOfProjectTab.Open ? 'Support' : 'Add' }}
         </div>
     </div>
 </div>

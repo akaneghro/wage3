@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DashboardData } from 'src/app/models/dashboard-data';
 
 @Component({
   selector: 'wage3-dashboard',
@@ -10,6 +11,10 @@ export class DashboardComponent implements OnInit {
   totalAssets: number;
   investedAmount: number;
   earnedToday: number;
+  currentBalance: number;
+  @Input() dashboardData: DashboardData;
+  @Output() changeMainTabToProjects: EventEmitter<any> = new EventEmitter();
+
   constructor() {}
 
   ngOnInit(): void {
@@ -17,5 +22,10 @@ export class DashboardComponent implements OnInit {
     this.totalAssets = 5000.25;
     this.investedAmount = 2500;
     this.earnedToday = 5;
+    this.currentBalance = 2500;
+  }
+
+  emitChangeInMainTabToProjects() {
+    this.changeMainTabToProjects.emit();
   }
 }

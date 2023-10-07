@@ -20,6 +20,7 @@ body
         padding: 16px
         font-size: $font-size-medium
         box-sizing: border-box
+        cursor: pointer
         &.small
             border-radius: 20px
             padding: 8px 20px
@@ -36,6 +37,11 @@ body
         font-size: $font-size-medium
         box-sizing: border-box
         border: 2px solid rgba(255, 255, 255, 0.17)
+        cursor: pointer
+        &.small
+            border-radius: 20px
+            padding: 8px 20px
+            font-size: $font-size-extra-small
     .fake-input
         width:100%
         padding: 16px 30px
@@ -52,7 +58,7 @@ body
         height: 30px
         color: $white
         font-size: $font-size-small
-        padding: 0 8px
+        padding: 0 16px
         &:focus 
             outline: none
         &::-webkit-inner-spin-button, &::-webkit-outer-spin-button

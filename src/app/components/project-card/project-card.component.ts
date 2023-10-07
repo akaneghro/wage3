@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TypesOfProjectTab } from 'src/app/enums/types-of-project-tabs';
 import { TypesOfUser } from 'src/app/enums/types-of-user';
 import { Project } from 'src/app/models/project';
+import * as moment from 'moment';
 
 @Component({
   selector: 'wage3-project-card',
@@ -16,8 +17,58 @@ export class ProjectCardComponent implements OnInit {
   TypesOfUser = TypesOfUser;
 
   public duration: string;
+  public timeLeft: string;
+  public estimatedInterest: number;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.duration = this.getDifferenceInMonthsAndDays(
+      this.project.startDate,
+      this.project.endDate
+    );
+    this.timeLeft = this.getDifferenceInMonthsAndDays(
+      new Date(),
+      this.project.startDate
+    );
+    if (this.tabSelected == TypesOfProjectTab.Supported) {
+      debugger;
+      let totalInterest = this.calculateInterest(
+        this.project.startDate,
+        this.project.endDate,
+        this.project.interestRate
+      );
+      this.estimatedInterest =
+        this.project.amountLoaned +
+        (this.project.amountLoaned * totalInterest) / 100;
+    }
+  }
+
+  calculateInterest(
+    startDate: Date,
+    endDate: Date,
+    annualInterestRate: number
+  ): number {
+    // Convertir las fechas a objetos moment
+    const start = moment(startDate);
+    const end = moment(endDate);
+
+    // Calcular la diferencia en años (como número decimal)
+    const yearsDifference = end.diff(start, 'years', true);
+
+    // Calcular el interés
+    const interest = yearsDifference * annualInterestRate;
+
+    return interest;
+  }
+
+  getDifferenceInMonthsAndDays(date1: Date, date2: Date): string {
+    const mDate1 = moment(date1);
+    const mDate2 = moment(date2);
+    const diffInMonths = mDate2.diff(mDate1, 'months');
+    mDate1.add(diffInMonths, 'months');
+    const diffInDays = mDate2.diff(mDate1, 'days');
+
+    return `${diffInMonths} month(s) and ${diffInDays} day(s)`;
+  }
 }

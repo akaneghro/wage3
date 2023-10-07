@@ -5,16 +5,11 @@
     grid-template-columns: 100%
     width: 100%
     justify-content: center
-    .invested-today
-        width: 100%
+    margin-top: 30px
+    .label-left
         display: grid
-        grid-template-columns: 50% 50%
-        .invested
-            display: grid
-            justify-items: start
-        .today
-            display: grid
-            justify-items: end
+        width: 100%
+        justify-items: start
     .invested-input
         display: grid
         grid-template-columns: auto auto 
@@ -25,8 +20,20 @@
             display: grid
             grid-template-columns: auto 1fr
             justify-self: end
+            align-items: center
+            column-gap: 8px
             .icon
                 max-width: 30px
                 justify-self: end
             .earned-today
                 justify-self: end
+    .three-projects
+        display: grid
+        width: 100%
+        grid-template-rows: auto auto
+        grid-template-columns: auto auto auto
+        justify-content: space-between
+        .fake-input
+            width: 150px
+            display: flex
+            justify-content: center
