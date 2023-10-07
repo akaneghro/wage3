@@ -1,6 +1,8 @@
 <wage3-main-card>
+
     <label>Total assets</label>
-    <div class="font-extra-large">{{ (dashboardData.currentBalance + dashboardData.supportingAmount) | currency : 'EUR'
+    <div class="font-extra-large">{{ (dashboardData.currentBalance + dashboardData.supportingAmount) | currency :
+        'EUR'
         }}</div>
     <!-- <div>Total assets</div> -->
     <label class="label-left">Available</label>
@@ -12,7 +14,8 @@
         <div class="invested-amount">{{ dashboardData.supportingAmount | currency : 'EUR' }}</div>
 
         <div class="icon-and-earned-today">
-            <img class="icon" src="assets/img/icon-up.svg" alt=""> <span>{{ dashboardData.earnedToday | currency : 'EUR'
+            <img class="icon" src="assets/img/icon-up.svg" alt=""> <span>{{ dashboardData.earnedToday | currency :
+                'EUR'
                 }}
             </span>
         </div>
