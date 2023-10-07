@@ -1,7 +1,6 @@
 @import "../../../assets/styles/main"
 :host
     display: grid
-    width: 100%
     font-size: $font-size-large
     padding: 50px
     .header-container
@@ -11,9 +10,12 @@
             display: grid
             justify-content: center
             align-items: center
+            &.connect
+                justify-content: end
             .logo-and-name
                 display: grid
                 grid-template-columns auto auto auto
+                justify-content: start
                 .brand-name 
                     sup
                         color: red
