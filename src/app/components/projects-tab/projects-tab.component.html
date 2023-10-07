@@ -1,0 +1,23 @@
+<div class="type-selector-container">
+
+    <div class="type-selector">
+        <div class="outlined-button" [ngClass]="{'selected': tabSelected == TypesOfProjectTab.Open}">Open</div>
+        <div class="outlined-button" *ngIf="typeOfUser == TypesOfUser.Employee"
+            [ngClass]="{'selected': tabSelected == TypesOfProjectTab.Supported }">
+            Supported</div>
+        <div class="outlined-button" *ngIf="typeOfUser == TypesOfUser.Company"
+            [ngClass]="{'selected': tabSelected == TypesOfProjectTab.Ongoing}">
+            Ongoing</div>
+        <div class="outlined-button" [ngClass]="{'primary-button': tabSelected == TypesOfProjectTab.Completed}">
+            Completed
+        </div>
+    </div>
+</div>
+<wage3-main-card>
+    <div class="tabSelected">Open</div>
+    <ul>
+        <li *ngFor="let project of projects">
+            <wage3-project-card [project]="project"></wage3-project-card>
+        </li>
+    </ul>
+</wage3-main-card>

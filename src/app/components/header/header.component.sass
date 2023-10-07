@@ -1,30 +1,40 @@
 @import "../../../assets/styles/main"
-
-.header-container
+:host
     display: grid
-    grid-template-columns: auto auto auto
-    .header-section
+    width: 100%
+    font-size: $font-size-large
+    .header-container
         display: grid
-        justify-content: center
-        align-items: center
-    .tabs
-        display: grid 
-        grid-template-columns: 50% 50%
-        .tab
+        grid-template-columns: auto auto auto
+        .header-section
             display: grid
             justify-content: center
             align-items: center
-            .tab-text
-                position: relative
-                display: inline-block
-            .selected::after 
-                content: "" 
-                position: absolute
-                bottom: 0 
-                left: 0
-                right: 0
-                height: 2px
-                background: $secondary-gradient
+            .logo-and-name
+                display: grid
+                grid-template-columns auto auto auto
+                .brand-name 
+                    sup
+                        color: red
+        .tabs
+            display: grid 
+            grid-template-columns: 50% 50%
+            .tab
+                display: grid
+                justify-content: center
+                align-items: center
+                .tab-text
+                    position: relative
+                    display: inline-block
+                    cursor: pointer
+                .selected::after 
+                    content: "" 
+                    position: absolute
+                    bottom: 0 
+                    left: 0
+                    right: 0
+                    height: 5px
+                    background: $secondary-gradient
 
 
 

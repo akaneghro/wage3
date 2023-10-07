@@ -1,10 +1,13 @@
 <wage3-main-card>
-    <div>{{ today | date : 'MMM yyyy' }}</div>
-    <div>{{ totalAssets | currency : 'EUR' }}</div>
+    <label>Current balance</label>
+    <div class="font-extra-large">{{ totalAssets | currency : 'EUR' }}</div>
     <div>Total assets</div>
     <div class="invested-today">
-        <div class="invested">Invested</div>
-        <div class="today"> Today</div>
+        <label class="invested">Invested</label>
+        <label class="today"> Today</label>
+    </div>
+    <div class="fake-input">
+        <div class="invested-amount">{{ investedAmount | currency : 'EUR' }}</div>
     </div>
     <div class="invested-input fake-input">
         <div class="invested-amount">{{ investedAmount | currency : 'EUR' }}</div>
@@ -13,6 +16,9 @@
             <img class="icon" src="assets/img/icon-up.jpg" alt=""> <span>{{ earnedToday | currency : 'EUR' }}
             </span>
         </div>
+    </div>
+    <div class="primary-button w-100">
+        View all projects
     </div>
     <!-- CHART -->
 </wage3-main-card>

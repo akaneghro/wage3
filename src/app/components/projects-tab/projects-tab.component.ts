@@ -4,18 +4,16 @@ import { TypesOfUser } from 'src/app/enums/types-of-user';
 import { Project } from 'src/app/models/project';
 
 @Component({
-  selector: 'wage3-project-card',
-  templateUrl: './project-card.component.html',
-  styleUrls: ['./project-card.component.sass'],
+  selector: 'wage3-projects-tab',
+  templateUrl: './projects-tab.component.html',
+  styleUrls: ['./projects-tab.component.sass'],
 })
-export class ProjectCardComponent implements OnInit {
-  @Input() project: Project;
-  @Input() tabSelected: TypesOfProjectTab;
+export class ProjectsTabComponent implements OnInit {
+  @Input() projects: Array<Project>;
   @Input() typeOfUser: TypesOfUser;
+  tabSelected: TypesOfProjectTab;
   TypesOfProjectTab = TypesOfProjectTab;
   TypesOfUser = TypesOfUser;
-
-  public duration: string;
 
   constructor() {}
 

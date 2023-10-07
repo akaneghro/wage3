@@ -1,3 +1,40 @@
-<div>
-    {{ project.title }} ||{{ project.startDate | date : 'dd/MM/yyyy' }}
+<div class="fake-input project-card">
+    <div class="main-project-data">
+        <div><img class="logo" src="assets/img/logo.svg"></div>
+        <div class="project-title-and-duration">
+            <div class="project-title">
+                {{ project.title }}
+            </div>
+            <div>
+                Duration: {{ duration }}
+            </div>
+        </div>
+        <div class="interest-rate-container">
+            <div>
+                APR
+            </div>
+            <div class="interest-rate">
+                {{ project.interestRate}}%
+            </div>
+        </div>
+    </div>
+    <wage3-progress-bar *ngIf="!(tabSelected == TypesOfProjectTab.Completed && typeOfUser == TypesOfUser.Employee)"
+        [currentNumber]="project.amountAchieved" [maxNumber]="project.amountProposed"></wage3-progress-bar>
+    <div class="amounts-and-days-left">
+        <div>
+            {{ '1600' | currency : 'EUR'}} / {{ '2000' | currency : 'EUR'}}
+        </div>
+        <div>
+            22 days left (15/11/2023)
+        </div>
+        <div>
+            <input class="fake-input-number" type="number">
+        </div>
+        <div>
+            <span></span>
+            <div class="primary-button small">
+                Close
+            </div>
+        </div>
+    </div>
 </div>

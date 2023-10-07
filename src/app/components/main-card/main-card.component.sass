@@ -1,15 +1,22 @@
 
 @import "../../../assets/styles/main"
-
-.main-container
-    border: 1px solid #000
-    width: 100%
+:host 
     display: grid
-    justify-items: center
-    background: $primary-gradient
-    border-radius: 50px
-
-    .internal-container
+    grid-template-columns: 100%
+    width: 100%
+    justify-content: center
+    .main-container
+        border: 1px solid #000
+        width: 100%
         display: grid
         justify-items: center
-        width: 60%
+        background: $primary-gradient
+        border-radius: 50px
+        max-width: 750px
+        padding: 30px 100px
+        margin-bottom: 50px
+        justify-self: center
+        .internal-container
+            display: grid
+            justify-items: center
+            width: 100% 
