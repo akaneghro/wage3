@@ -1,0 +1,30 @@
+@import "../../../assets/styles/main"
+
+.header-container
+    display: grid
+    grid-template-columns: auto auto auto
+    .header-section
+        display: grid
+        justify-content: center
+        align-items: center
+    .tabs
+        display: grid 
+        grid-template-columns: 50% 50%
+        .tab
+            display: grid
+            justify-content: center
+            align-items: center
+            .tab-text
+                position: relative
+                display: inline-block
+            .selected::after 
+                content: "" 
+                position: absolute
+                bottom: 0 
+                left: 0
+                right: 0
+                height: 2px
+                background: $secondary-gradient
+
+
+

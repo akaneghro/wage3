@@ -8,6 +8,11 @@ import { EmployeeDashboardComponent } from './pages/employee-dashboard/employee-
 import { ProjectListComponent } from './components/project-list/project-list.component';
 import { ProjectCardComponent } from './components/project-card/project-card.component';
 import { ProjectDetailsComponent } from './components/project-details/project-details.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CommonModule } from '@angular/common';
+import { MainCardComponent } from './components/main-card/main-card.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +21,14 @@ import { ProjectDetailsComponent } from './components/project-details/project-de
     EmployeeDashboardComponent,
     ProjectListComponent,
     ProjectCardComponent,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    HeaderComponent,
+    DashboardComponent,
+    LoaderComponent,
+    MainCardComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, CommonModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

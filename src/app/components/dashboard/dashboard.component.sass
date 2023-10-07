@@ -1,0 +1,29 @@
+@import "../../../assets/styles/main"
+
+.invested-today
+    width: 100%
+    display: grid
+    grid-template-columns: 50% 50%
+    .invested
+        display: grid
+        justify-items: start
+    .today
+        display: grid
+        justify-items: end
+.invested-input
+    width:100%
+    display: grid
+    grid-template-columns: auto auto 
+    justify-items: stretch
+    padding: 24px
+    .invested-amount
+        justify-self: start
+    .icon-and-earned-today
+        display: grid
+        grid-template-columns: auto 1fr
+        justify-self: end
+        .icon
+            max-width: 30px
+            justify-self: end
+        .earned-today
+            justify-self: end

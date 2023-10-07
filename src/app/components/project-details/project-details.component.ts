@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-project-details',
+  selector: 'wage3-project-details',
   templateUrl: './project-details.component.html',
-  styleUrls: ['./project-details.component.sass']
+  styleUrls: ['./project-details.component.sass'],
 })
 export class ProjectDetailsComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
