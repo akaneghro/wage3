@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="header-section connect">
-        <ng-container *ngIf="!dashboardData && !dashboardData.address; else addressButton">
+        <ng-container *ngIf="dashboardData && !dashboardData.address; else addressButton">
             <div class="primary-button">
                 Connect wallet
             </div>

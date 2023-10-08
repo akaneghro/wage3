@@ -5,6 +5,7 @@ import * as Wage3AbiContract from '../contracts/Wage3.json';
 import Web3 from 'web3';
 import { Web3Service } from './web3.service';
 import moment from 'moment';
+import { AddressAmount } from '../models/address-amount';
 
 @Injectable({
   providedIn: 'root',
@@ -92,7 +93,12 @@ export class Wage3Service {
       startDate: moment.unix(data[5]).toDate(),
       endDate: moment.unix(data[6]).toDate(),
       state: data[7],
-      addresses: data[8],
+      addressesAndAmounts: data[9].map((addressAndAmount) => {
+        return <AddressAmount>{
+          address: addressAndAmount[0],
+          amount: addressAndAmount[1],
+        };
+      }),
     };
   }
 }

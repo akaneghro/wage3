@@ -73,6 +73,12 @@ export class Web3Service {
     return this.web3.eth.getBalance(account);
   };
 
+  getBalanceInEth = async (account) => {
+    return this.web3.eth.getBalance(account).then((balance) => {
+      return this.web3.utils.fromWei(balance);
+    });
+  };
+
   sign = async (message, account) => {
     return this.web3.eth.sign(
       this.web3.utils.sha3(message),
