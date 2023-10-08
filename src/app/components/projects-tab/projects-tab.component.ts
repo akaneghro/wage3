@@ -10,6 +10,7 @@ import { Project } from 'src/app/models/project';
 })
 export class ProjectsTabComponent implements OnInit {
   @Input() openProjects: Array<Project>;
+  @Input() completedProjects: Array<Project>;
   @Input() supportedProjects: Array<Project>;
   @Input() typeOfUser: TypesOfUser;
   projects: Array<Project>;
@@ -31,6 +32,9 @@ export class ProjectsTabComponent implements OnInit {
         break;
       case TypesOfProjectTab.Supported:
         this.projects = this.supportedProjects;
+        break;
+      case TypesOfProjectTab.Completed:
+        this.projects = this.completedProjects;
         break;
     }
   }

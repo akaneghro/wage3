@@ -45,8 +45,8 @@
         </div>
     </ng-container>
     <div class="input-number-and-button-container">
-        <input class="fake-input-number" type="number">
-        <div class="primary-button small">
+        <input class="fake-input-number" type="number" [(ngModel)]="amountToLoan">
+        <div class="primary-button small" (click)="supportProject(project)">
             {{ tabSelected == TypesOfProjectTab.Open ? 'Support' : 'Add' }}
         </div>
     </div>

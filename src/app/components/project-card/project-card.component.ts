@@ -3,6 +3,7 @@ import { TypesOfProjectTab } from 'src/app/enums/types-of-project-tabs';
 import { TypesOfUser } from 'src/app/enums/types-of-user';
 import { Project } from 'src/app/models/project';
 import moment from 'moment';
+import { Wage3Service } from 'src/app/services/wage3.service';
 
 @Component({
   selector: 'wage3-project-card',
@@ -15,12 +16,13 @@ export class ProjectCardComponent implements OnInit {
   @Input() typeOfUser: TypesOfUser;
   TypesOfProjectTab = TypesOfProjectTab;
   TypesOfUser = TypesOfUser;
+  public amountToLoan: number;
 
   public duration: string;
   public timeLeft: string;
   public estimatedInterest: number;
 
-  constructor() {}
+  constructor(private wage3Service: Wage3Service) {}
 
   ngOnInit(): void {
     this.duration = this.getDifferenceInMonthsAndDays(
@@ -69,5 +71,9 @@ export class ProjectCardComponent implements OnInit {
     const diffInDays = mDate2.diff(mDate1, 'days');
 
     return `${diffInMonths} month(s) and ${diffInDays} day(s)`;
+  }
+
+  async supportProject(project: Project) {
+    await this.wage3Service.loanProject(project.id, this.amountToLoan);
   }
 }

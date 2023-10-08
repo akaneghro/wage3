@@ -16,15 +16,5 @@ export class CompanyDashboardComponent implements OnInit {
     private wage3Service: Wage3Service
   ) {}
 
-  ngOnInit(): void {
-    this.web3Service.web3Loaded.subscribe((ok) => {
-      this.getOpenProjects();
-    });
-  }
-
-  getOpenProjects() {
-    this.wage3Service.getOpenProjects().subscribe((projects) => {
-      this.projects = projects;
-    });
-  }
+  ngOnInit(): void {}
 }
