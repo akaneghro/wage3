@@ -19,18 +19,35 @@
         typeOfUser == TypesOfUser.Employee
       )
     "
-    [currentNumber]="project.amountAchieved"
+    [currentNumber]="
+      tabSelected == TypesOfProjectTab.Completed
+        ? project.amountProposed
+        : project.amountAchieved
+    "
     [maxNumber]="project.amountProposed"
   ></wage3-progress-bar>
+
   <div class="amounts-and-days-left">
     <div>
-      {{ project.amountAchieved | currency : "EUR" }} /
+      {{
+        tabSelected == TypesOfProjectTab.Completed
+          ? (project.amountProposed | currency : "EUR")
+          : (project.amountAchieved | currency : "EUR")
+      }}
+      /
       {{ project.amountProposed | currency : "EUR" }}
     </div>
-    <div>{{ timeLeft }} left ({{ project.endFinancingDate | date }})</div>
+    <div *ngIf="tabSelected != TypesOfProjectTab.Completed">
+      {{ timeLeft }} left ({{ project.endFinancingDate | date }})
+    </div>
   </div>
 
-  <ng-container *ngIf="tabSelected == TypesOfProjectTab.Supported">
+  <ng-container
+    *ngIf="
+      tabSelected == TypesOfProjectTab.Supported ||
+      tabSelected == TypesOfProjectTab.Completed
+    "
+  >
     <div class="amount-loaned-and-estimated">
       <div>
         <div class="amount-loaned">
@@ -38,13 +55,31 @@
         </div>
         <div>Estimated amount: {{ estimatedInterest | currency : "EUR" }}</div>
       </div>
-      <div class="cancel-button">
+      <div
+        *ngIf="tabSelected != TypesOfProjectTab.Completed"
+        class="cancel-button"
+      >
         <div class="outlined-button small">Cancel</div>
+      </div>
+      <div
+        *ngIf="tabSelected == TypesOfProjectTab.Completed"
+        class="cancel-button"
+      >
+        <div class="outlined-button small" style="color: #00dda3">Claimed</div>
       </div>
     </div>
   </ng-container>
-  <div class="input-number-and-button-container">
-    <input class="fake-input-number" type="number" [(ngModel)]="amountToLoan" />
+
+  <div
+    *ngIf="tabSelected != TypesOfProjectTab.Completed"
+    class="input-number-and-button-container"
+  >
+    <input
+      class="fake-input-number"
+      type="number"
+      [(ngModel)]="amountToLoan"
+      placeholder="0.00 €"
+    />
     <div class="primary-button small" (click)="supportProject(project)">
       {{ tabSelected == TypesOfProjectTab.Open ? "Support" : "Add" }}
     </div>

@@ -1,24 +1,45 @@
 <div class="type-selector-container">
-    <div class="type-selector">
-        <div [ngClass]="{'primary-button': tabSelected == TypesOfProjectTab.Open, 'outlined-button': tabSelected != TypesOfProjectTab.Open}"
-            (click)="changeProjectTab(TypesOfProjectTab.Open)">
-            Open
-        </div>
-        <div [ngClass]="{'primary-button': tabSelected == TypesOfProjectTab.Supported, 'outlined-button': tabSelected != TypesOfProjectTab.Supported}"
-            (click)="changeProjectTab(TypesOfProjectTab.Supported)">
-            Supported
-        </div>
-        <div [ngClass]="{'primary-button': tabSelected == TypesOfProjectTab.Completed, 'outlined-button': tabSelected != TypesOfProjectTab.Completed}"
-            (click)="changeProjectTab(TypesOfProjectTab.Completed)">
-            Completed
-        </div>
+  <div class="type-selector">
+    <div
+      [ngClass]="{
+        'primary-button': tabSelected == TypesOfProjectTab.Open,
+        'outlined-button': tabSelected != TypesOfProjectTab.Open
+      }"
+      (click)="changeProjectTab(TypesOfProjectTab.Open)"
+      style="margin-right: 10px"
+    >
+      Open
     </div>
+    <div
+      [ngClass]="{
+        'primary-button': tabSelected == TypesOfProjectTab.Supported,
+        'outlined-button': tabSelected != TypesOfProjectTab.Supported
+      }"
+      (click)="changeProjectTab(TypesOfProjectTab.Supported)"
+      style="margin-right: 10px; margin-left: 10px"
+    >
+      Supported
+    </div>
+    <div
+      [ngClass]="{
+        'primary-button': tabSelected == TypesOfProjectTab.Completed,
+        'outlined-button': tabSelected != TypesOfProjectTab.Completed
+      }"
+      (click)="changeProjectTab(TypesOfProjectTab.Completed)"
+      style="margin-left: 10px"
+    >
+      Completed
+    </div>
+  </div>
 </div>
 <wage3-main-card>
-    <div class="tabSelected">{{tabSelected}}</div>
-    <ul>
-        <li *ngFor="let project of projects">
-            <wage3-project-card [project]="project" [tabSelected]="tabSelected"></wage3-project-card>
-        </li>
-    </ul>
+  <div class="tabSelected">{{ tabSelected }}</div>
+  <ul>
+    <li *ngFor="let project of projects">
+      <wage3-project-card
+        [project]="project"
+        [tabSelected]="tabSelected"
+      ></wage3-project-card>
+    </li>
+  </ul>
 </wage3-main-card>

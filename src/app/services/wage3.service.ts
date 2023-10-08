@@ -46,7 +46,6 @@ export class Wage3Service {
   }
 
   async loanProject(projectId: number, amount: number) {
-    debugger;
     const amountToSend = this.web3.utils.toWei(amount.toString());
 
     const gasAmount = await this.contract.methods
@@ -89,7 +88,6 @@ export class Wage3Service {
   }
 
   mapProject(data: Array<any>): Project {
-    debugger;
     let project = <Project>{
       id: data[0],
       title: data[1],
@@ -104,7 +102,7 @@ export class Wage3Service {
       addressesAndAmounts: data[9].map((addressAndAmount) => {
         return <AddressAmount>{
           address: addressAndAmount[0],
-          amount: addressAndAmount[1],
+          amount: parseInt(addressAndAmount[1].toString().slice(0, -14)),
         };
       }),
     };

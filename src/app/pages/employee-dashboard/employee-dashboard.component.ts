@@ -42,11 +42,7 @@ export class EmployeeDashboardComponent implements OnInit {
             moment(project.endDate).isBefore(moment())
           );
           this.supportedProjects = projects.filter((project) => {
-            return (
-              moment(project.endDate).isAfter(moment()) &&
-              moment(project.endFinancingDate).isBefore(moment()) &&
-              project.amountLoanedByUser > 0
-            );
+            return project.amountLoanedByUser > 0;
           });
           this.supportedProjects.forEach((project) => {
             this.dashboardData.supportingAmount += project.amountLoanedByUser;

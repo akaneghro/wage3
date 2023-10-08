@@ -33,7 +33,10 @@ export class ProjectCardComponent implements OnInit {
       new Date(),
       this.project.endFinancingDate
     );
-    if (this.tabSelected == TypesOfProjectTab.Supported) {
+    if (
+      this.tabSelected == TypesOfProjectTab.Supported ||
+      this.tabSelected == TypesOfProjectTab.Completed
+    ) {
       let totalInterest = this.calculateInterest(
         this.project.startFinancingDate,
         this.project.endDate,
@@ -69,13 +72,12 @@ export class ProjectCardComponent implements OnInit {
     const diffInMonths = mDate2.diff(mDate1, 'months');
     mDate1.add(diffInMonths, 'months');
     const diffInDays = mDate2.diff(mDate1, 'days');
+    const months = diffInMonths == 0 ? '' : 'month(s) and';
 
-    return `${diffInMonths} month(s) and ${diffInDays} day(s)`;
+    return `${months} ${diffInDays} day(s)`;
   }
 
   async supportProject(project: Project) {
-    const amount = this.amountToLoan / 1000000000000000000;
-    debugger;
-    await this.wage3Service.loanProject(project.id, this.amountToLoan);
+    await this.wage3Service.loanProject(project.id, this.amountToLoan / 10000);
   }
 }
