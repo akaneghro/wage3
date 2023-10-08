@@ -27,8 +27,9 @@ export class EmployeeDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.typeOfUser = TypesOfUser.Employee;
     this.typeOfMainTabSelected = TypesOfMainTab.Dashboard;
-    this.setupDashboardData();
+
     this.web3Service.web3Loaded.subscribe((ok) => {
+      this.setupDashboardData();
       this.getOpenProjects();
       this.getSupportedProjects();
     });
@@ -36,7 +37,7 @@ export class EmployeeDashboardComponent implements OnInit {
 
   setupDashboardData() {
     this.dashboardData = <DashboardData>{
-      address: 'asdfsadf32r',
+      address: this.web3Service.getAccounts()[0],
       currentBalance: 1300.53,
       supportingAmount: 8500,
       numberOfSupportedProjects: 2,

@@ -20,8 +20,15 @@
         </div>
     </div>
     <div class="header-section connect">
-        <div class="primary-button">
-            Connect wallet
-        </div>
+        <ng-container *ngIf="dashboardData.address; else addressButton">
+            <div class="primary-button">
+                Connect wallet
+            </div>
+        </ng-container>
+        <ng-template #addressButton>
+            <div class="outlined-button">
+                {{dashboardData.address}}
+            </div>
+        </ng-template>
     </div>
 </div>
