@@ -27,25 +27,36 @@ export class EmployeeDashboardComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.typeOfUser = TypesOfUser.Employee;
     this.typeOfMainTabSelected = TypesOfMainTab.Dashboard;
-    this.setupDashboardData();
     this.web3Service.web3Loaded.subscribe(async (ok) => {
+      await this.setupDashboardData();
       await this.web3Service.switchNetwork('0x13881');
       this.wage3Service.initService(await this.web3Service.getWeb3());
-      this.getOpenProjects();
-      this.getSupportedProjects();
+      this.wage3Service.getProjects().subscribe((projects) => {
+        debugger;
+        if (projects) {
+          this.openProjects = projects;
+        }
+      });
     });
   }
 
-  setupDashboardData() {
+  async setupDashboardData() {
     this.dashboardData = <DashboardData>{
-      address: 'asdfsadf32r',
-      currentBalance: 1300.53,
       supportingAmount: 8500,
       numberOfSupportedProjects: 2,
       numberOfCompletedProjects: 0,
       numberOfOpenProjects: 5,
       earnedToday: 50.45,
     };
+
+    this.web3Service.getAccounts().then((accounts) => {
+      this.dashboardData.address = accounts[0];
+      this.web3Service
+        .getBalance(this.dashboardData.address)
+        .then((balance) => {
+          this.dashboardData.currentBalance = balance as any;
+        });
+    });
   }
 
   getSupportedProjects() {

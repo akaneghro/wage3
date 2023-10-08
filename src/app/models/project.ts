@@ -1,4 +1,7 @@
+import { ProjectState } from '../enums/project-states';
+
 export interface Project {
+  id: string;
   title: string;
   image: string;
   description: string;
@@ -11,4 +14,6 @@ export interface Project {
   projectAddress: string;
   ownerAddress: string;
   loanerAddress: string;
+  state: ProjectState;
+  addresses: Array<string>;
 }

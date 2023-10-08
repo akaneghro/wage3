@@ -4,6 +4,7 @@ import { Observable, Subject, of } from 'rxjs';
 import * as Wage3AbiContract from '../contracts/Wage3.json';
 import Web3 from 'web3';
 import { Web3Service } from './web3.service';
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,8 @@ export class Wage3Service {
   private web3: Web3;
   private webAbiContract: any = Wage3AbiContract;
   private contract: any;
+  private address: string;
+  private projects: Subject<Array<Project>> = new Subject<Array<Project>>();
 
   constructor() {}
 
@@ -21,12 +24,20 @@ export class Wage3Service {
       this.webAbiContract.default.abi,
       this.webAbiContract.default.contract
     );
+    this.web3.eth.getAccounts().then((accounts) => {
+      this.address = accounts[0];
+    });
   }
 
+  getProjects(): Subject<Array<Project>> {
+    return this.projects;
+  }
   getOpenProjects(): Observable<Array<Project>> {
     this.contract.methods.getProjects().call((error, result) => {
+      debugger;
       if (!error) {
         const project = result; // El resultado es un objeto con las propiedades del struct
+        result.map((project) => this.mapProject(project));
         console.log(project); // Haz algo con el struct devuelto
       } else {
         console.error(error);
@@ -117,7 +128,7 @@ export class Wage3Service {
   async loanProject(projectId: number, amount: number) {
     this.contract.methods
       .loanProject(projectId, amount)
-      .send({ from: fromAccount }, (error, transactionHash) => {
+      .send({ from: this.address }, (error, transactionHash) => {
         if (!error) {
           console.log(`Transacción enviada: ${transactionHash}`);
         } else {
@@ -129,7 +140,7 @@ export class Wage3Service {
   async claimLoanWithInterest(projectId: number) {
     this.contract.methods
       .claimLoanWithInterest(projectId)
-      .send({ from: fromAccount }, (error, transactionHash) => {
+      .send({ from: this.address }, (error, transactionHash) => {
         if (!error) {
           console.log(`Transacción enviada: ${transactionHash}`);
         } else {
@@ -141,12 +152,26 @@ export class Wage3Service {
   async claimLoanWithoutInterest(projectId: number) {
     this.contract.methods
       .claimLoanWithoutInterest(projectId)
-      .send({ from: fromAccount }, (error, transactionHash) => {
+      .send({ from: this.address }, (error, transactionHash) => {
         if (!error) {
           console.log(`Transacción enviada: ${transactionHash}`);
         } else {
           console.error(error);
         }
       });
+  }
+
+  mapProject(data: Array<any>): Project {
+    return <Project>{
+      id: data[0],
+      title: data[1],
+      description: data[2],
+      amountProposed: data[3],
+      interestRate: data[4],
+      startDate: moment(data[5]).toDate(),
+      endDate: moment(data[6]).toDate(),
+      state: data[7],
+      addresses: data[8],
+    };
   }
 }
