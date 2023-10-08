@@ -24,11 +24,13 @@ export class EmployeeDashboardComponent implements OnInit {
     private wage3Service: Wage3Service
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.typeOfUser = TypesOfUser.Employee;
     this.typeOfMainTabSelected = TypesOfMainTab.Dashboard;
     this.setupDashboardData();
-    this.web3Service.web3Loaded.subscribe((ok) => {
+    this.web3Service.web3Loaded.subscribe(async (ok) => {
+      await this.web3Service.switchNetwork('0x13881');
+      this.wage3Service.initService(await this.web3Service.getWeb3());
       this.getOpenProjects();
       this.getSupportedProjects();
     });

@@ -10,12 +10,11 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "target": "es2015",
-    "module": "es2020",    
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "module": "es2020",
+    "lib": ["es2018", "dom"],
     "paths": {
       "process": ["./node_modules/process/browser"],
       "@styles/*": ["src/assets/styles/*"]

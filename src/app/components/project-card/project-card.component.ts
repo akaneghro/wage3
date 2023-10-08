@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TypesOfProjectTab } from 'src/app/enums/types-of-project-tabs';
 import { TypesOfUser } from 'src/app/enums/types-of-user';
 import { Project } from 'src/app/models/project';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
   selector: 'wage3-project-card',
@@ -32,7 +32,6 @@ export class ProjectCardComponent implements OnInit {
       this.project.startDate
     );
     if (this.tabSelected == TypesOfProjectTab.Supported) {
-      debugger;
       let totalInterest = this.calculateInterest(
         this.project.startDate,
         this.project.endDate,
