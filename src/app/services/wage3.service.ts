@@ -11,7 +11,6 @@ import { AddressAmount } from '../models/address-amount';
 })
 export class Wage3Service {
   private web3: Web3;
-  //private bigNumber: any;
   private webAbiContract: any = Wage3AbiContract;
   private contract: any;
   private address: string;
@@ -28,7 +27,6 @@ export class Wage3Service {
     this.web3.eth.getAccounts().then((accounts) => {
       this.address = accounts[0];
     });
-    //this.bigNumber = this.web3.utils.toBN;
   }
 
   getProjects(): Subject<Array<Project>> {
@@ -58,12 +56,14 @@ export class Wage3Service {
       .estimateGas({ from: this.address })
       .then((gasAmount) => gasAmount);
 
-    return this.contract.methods.loanProject(projectId, amount).send(
-      { from: this.address, value: amountToSend, gas: gasAmount * 2 }, //TO-DO AVERIGUAR BIEN EL COSTE DEL GAS
-      () => {
-        console.log('Transacción enviada');
-      }
-    );
+    return this.contract.methods
+      .loanProject(projectId, amount)
+      .send(
+        { from: this.address, value: amountToSend, gas: gasAmount * 2 },
+        () => {
+          console.log('Transacción enviada');
+        }
+      );
   }
 
   async claimLoanWithInterest(projectId: number) {
