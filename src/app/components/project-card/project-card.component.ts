@@ -26,22 +26,22 @@ export class ProjectCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.duration = this.getDifferenceInMonthsAndDays(
-      this.project.startDate,
+      this.project.startFinancingDate,
       this.project.endDate
     );
     this.timeLeft = this.getDifferenceInMonthsAndDays(
       new Date(),
-      this.project.startDate
+      this.project.endFinancingDate
     );
     if (this.tabSelected == TypesOfProjectTab.Supported) {
       let totalInterest = this.calculateInterest(
-        this.project.startDate,
+        this.project.startFinancingDate,
         this.project.endDate,
         this.project.interestRate
       );
       this.estimatedInterest =
-        this.project.amountLoaned +
-        (this.project.amountLoaned * totalInterest) / 100;
+        this.project.amountLoanedByUser +
+        (this.project.amountLoanedByUser * totalInterest) / 100;
     }
   }
 
@@ -74,6 +74,8 @@ export class ProjectCardComponent implements OnInit {
   }
 
   async supportProject(project: Project) {
+    const amount = this.amountToLoan / 1000000000000000000;
+    debugger;
     await this.wage3Service.loanProject(project.id, this.amountToLoan);
   }
 }

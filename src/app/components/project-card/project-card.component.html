@@ -1,53 +1,52 @@
 <div class="fake-input project-card">
-    <div class="main-project-data">
-        <div><img class="logo" src="assets/img/circle.svg"></div>
-        <div class="project-title-and-duration">
-            <div class="project-title">
-                {{ project.title }}
-            </div>
-            <div>
-                Duration: {{ duration }}
-            </div>
-        </div>
-        <div class="interest-rate-container">
-            <div>
-                APR
-            </div>
-            <div class="interest-rate">
-                {{ project.interestRate}}%
-            </div>
-        </div>
+  <div class="main-project-data">
+    <div><img class="logo" src="assets/img/circle.svg" /></div>
+    <div class="project-title-and-duration">
+      <div class="project-title">
+        {{ project.title }}
+      </div>
+      <div>Duration: {{ duration }}</div>
     </div>
-    <wage3-progress-bar *ngIf="!(tabSelected == TypesOfProjectTab.Completed && typeOfUser == TypesOfUser.Employee)"
-        [currentNumber]="project.amountAchieved" [maxNumber]="project.amountProposed"></wage3-progress-bar>
-    <div class="amounts-and-days-left">
-        <div>
-            {{ project.amountAchieved | currency : 'EUR'}} / {{ project.amountProposed | currency : 'EUR'}}
-        </div>
-        <div>
-            {{timeLeft}} left ({{project.startDate | date }})
-        </div>
+    <div class="interest-rate-container">
+      <div>APR</div>
+      <div class="interest-rate">{{ project.interestRate }}%</div>
     </div>
+  </div>
+  <wage3-progress-bar
+    *ngIf="
+      !(
+        tabSelected == TypesOfProjectTab.Completed &&
+        typeOfUser == TypesOfUser.Employee
+      )
+    "
+    [currentNumber]="project.amountAchieved"
+    [maxNumber]="project.amountProposed"
+  ></wage3-progress-bar>
+  <div class="amounts-and-days-left">
+    <div>
+      {{ project.amountAchieved | currency : "EUR" }} /
+      {{ project.amountProposed | currency : "EUR" }}
+    </div>
+    <div>{{ timeLeft }} left ({{ project.endFinancingDate | date }})</div>
+  </div>
 
-    <ng-container *ngIf="tabSelected == TypesOfProjectTab.Supported">
-        <div class="amount-loaned-and-estimated">
-            <div>
-                <div class="amount-loaned">
-                    {{ project.amountLoaned | currency : 'EUR'}}
-                </div>
-                <div>
-                    Estimated amount: {{ estimatedInterest | currency : 'EUR'}}
-                </div>
-            </div>
-            <div class="cancel-button">
-                <div class="outlined-button small">Cancel</div>
-            </div>
+  <ng-container *ngIf="tabSelected == TypesOfProjectTab.Supported">
+    <div class="amount-loaned-and-estimated">
+      <div>
+        <div class="amount-loaned">
+          {{ project.amountLoaned | currency : "EUR" }}
         </div>
-    </ng-container>
-    <div class="input-number-and-button-container">
-        <input class="fake-input-number" type="number" [(ngModel)]="amountToLoan">
-        <div class="primary-button small" (click)="supportProject(project)">
-            {{ tabSelected == TypesOfProjectTab.Open ? 'Support' : 'Add' }}
-        </div>
+        <div>Estimated amount: {{ estimatedInterest | currency : "EUR" }}</div>
+      </div>
+      <div class="cancel-button">
+        <div class="outlined-button small">Cancel</div>
+      </div>
     </div>
+  </ng-container>
+  <div class="input-number-and-button-container">
+    <input class="fake-input-number" type="number" [(ngModel)]="amountToLoan" />
+    <div class="primary-button small" (click)="supportProject(project)">
+      {{ tabSelected == TypesOfProjectTab.Open ? "Support" : "Add" }}
+    </div>
+  </div>
 </div>

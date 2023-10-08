@@ -46,18 +46,16 @@ export class Wage3Service {
   }
 
   async loanProject(projectId: number, amount: number) {
-    const amountToSend = this.web3.utils.toWei(
-      this.web3.utils.toBN(amount),
-      'ether'
-    );
+    debugger;
+    const amountToSend = this.web3.utils.toWei(amount.toString());
 
     const gasAmount = await this.contract.methods
-      .loanProject(projectId, amount)
+      .loanProject(projectId, amountToSend)
       .estimateGas({ from: this.address })
       .then((gasAmount) => gasAmount);
 
     return this.contract.methods
-      .loanProject(projectId, amount)
+      .loanProject(projectId, amountToSend)
       .send(
         { from: this.address, value: amountToSend, gas: gasAmount * 2 },
         () => {
@@ -91,15 +89,18 @@ export class Wage3Service {
   }
 
   mapProject(data: Array<any>): Project {
-    return <Project>{
+    debugger;
+    let project = <Project>{
       id: data[0],
       title: data[1],
       description: data[2],
-      amountProposed: data[3],
+      amountProposed: parseInt(data[3].toString().slice(0, -14)),
       interestRate: data[4],
-      startDate: moment.unix(data[5]).toDate(),
-      endDate: moment.unix(data[6]).toDate(),
-      state: data[7],
+      startFinancingDate: moment.unix(data[5]).toDate(),
+      endFinancingDate: moment.unix(data[6]).toDate(),
+      endDate: moment.unix(data[7]).toDate(),
+      state: data[8],
+      amountAchieved: 0,
       addressesAndAmounts: data[9].map((addressAndAmount) => {
         return <AddressAmount>{
           address: addressAndAmount[0],
@@ -107,5 +108,17 @@ export class Wage3Service {
         };
       }),
     };
+
+    project.addressesAndAmounts.forEach((addressAndAmount) => {
+      if (addressAndAmount.address == this.address) {
+        project.amountLoanedByUser = addressAndAmount.amount;
+      }
+      project.amountAchieved += addressAndAmount.amount;
+    });
+    project.amountLoanedByUser = project.amountLoanedByUser
+      ? project.amountLoanedByUser
+      : 0;
+
+    return project;
   }
 }

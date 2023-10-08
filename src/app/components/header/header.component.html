@@ -1,34 +1,47 @@
 <div class="header-container">
-    <div class="header-section logo-and-name">
-        <div class="logo">
-            <div><img src="assets/img/logo_employee.svg"></div>
-        </div>
+  <div class="header-section logo-and-name">
+    <div class="logo">
+      <div>
+        <img src="assets/img/logo_employee.svg" style="max-width: 350px" />
+      </div>
     </div>
-    <div class="header-section tabs">
-
-        <div class="tab">
-            <span class="tab-text" (click)="emitChangeInMainTab(TypesOfMainTab.Dashboard)"
-                [ngClass]="{'selected': typeOfMainTabSelected == TypesOfMainTab.Dashboard}">
-                Dashboard
-            </span>
-        </div>
-        <div class="tab">
-            <span class="tab-text" (click)="emitChangeInMainTab(TypesOfMainTab.Projects)"
-                [ngClass]="{'selected': typeOfMainTabSelected == TypesOfMainTab.Projects}">
-                Projects
-            </span>
-        </div>
+  </div>
+  <div class="header-section tabs" style="justify-self: center">
+    <div class="tab" style="margin-right: 25px">
+      <span
+        class="tab-text"
+        (click)="emitChangeInMainTab(TypesOfMainTab.Dashboard)"
+        [ngClass]="{
+          selected: typeOfMainTabSelected == TypesOfMainTab.Dashboard
+        }"
+        style="font-size: 26px"
+      >
+        Dashboard
+      </span>
     </div>
-    <div class="header-section connect">
-        <ng-container *ngIf="dashboardData && !dashboardData.address; else addressButton">
-            <div class="primary-button">
-                Connect wallet
-            </div>
-        </ng-container>
-        <ng-template #addressButton>
-            <div class="outlined-button">
-                {{dashboardData.address}}
-            </div>
-        </ng-template>
+    <div class="tab" style="margin-left: 25px">
+      <span
+        class="tab-text"
+        (click)="emitChangeInMainTab(TypesOfMainTab.Projects)"
+        [ngClass]="{
+          selected: typeOfMainTabSelected == TypesOfMainTab.Projects
+        }"
+        style="font-size: 26px"
+      >
+        Projects
+      </span>
     </div>
+  </div>
+  <div class="header-section connect">
+    <ng-container
+      *ngIf="dashboardData && !dashboardData.address; else addressButton"
+    >
+      <div class="primary-button">Connect wallet</div>
+    </ng-container>
+    <ng-template #addressButton>
+      <div class="outlined-button">
+        {{ dashboardData.address }}
+      </div>
+    </ng-template>
+  </div>
 </div>

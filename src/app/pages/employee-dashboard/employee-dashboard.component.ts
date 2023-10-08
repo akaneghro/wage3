@@ -27,7 +27,9 @@ export class EmployeeDashboardComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.dashboardData = <DashboardData>{};
+    this.dashboardData = <DashboardData>{
+      supportingAmount: 0,
+    };
     this.typeOfUser = TypesOfUser.Employee;
     this.typeOfMainTabSelected = TypesOfMainTab.Dashboard;
     this.web3Service.web3Loaded.subscribe(async (ok) => {
@@ -36,24 +38,32 @@ export class EmployeeDashboardComponent implements OnInit {
       this.wage3Service.initService(await this.web3Service.getWeb3());
       this.wage3Service.getProjects().subscribe((projects) => {
         if (projects) {
-          this.completedProjects = projects.filter(
-            (project) =>
-              moment(project.startDate).isBefore(moment()) &&
-              moment(project.endDate).isAfter(moment())
+          this.completedProjects = projects.filter((project) =>
+            moment(project.endDate).isBefore(moment())
           );
           this.supportedProjects = projects.filter((project) => {
             return (
-              moment(project.startDate).isBefore(moment()) &&
-              moment(project.endDate).isAfter(moment())
+              moment(project.endDate).isAfter(moment()) &&
+              moment(project.endFinancingDate).isBefore(moment()) &&
+              project.amountLoanedByUser > 0
             );
           });
-          debugger;
-          this.dashboardData.supportingAmount = this.supportedProjects
-            .map((project) => project.amountLoaned)
-            .reduce((a, b) => a + b);
-          this.openProjects = projects.filter((project) =>
-            moment(project.startDate).isAfter(moment())
-          );
+          this.supportedProjects.forEach((project) => {
+            this.dashboardData.supportingAmount += project.amountLoanedByUser;
+          });
+          this.openProjects = projects.filter((project) => {
+            return (
+              moment(project.endFinancingDate).isAfter(moment()) &&
+              moment(project.startFinancingDate).isBefore(moment()) &&
+              project.amountLoanedByUser == 0
+            );
+          });
+
+          this.dashboardData.numberOfCompletedProjects =
+            this.completedProjects.length;
+          this.dashboardData.numberOfOpenProjects = this.openProjects.length;
+          this.dashboardData.numberOfSupportedProjects =
+            this.supportedProjects.length;
         }
       });
     });
