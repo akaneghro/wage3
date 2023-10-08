@@ -10,6 +10,7 @@ import moment from 'moment';
 })
 export class Wage3Service {
   private web3: Web3;
+  //private bigNumber: any;
   private webAbiContract: any = Wage3AbiContract;
   private contract: any;
   private address: string;
@@ -26,6 +27,7 @@ export class Wage3Service {
     this.web3.eth.getAccounts().then((accounts) => {
       this.address = accounts[0];
     });
+    //this.bigNumber = this.web3.utils.toBN;
   }
 
   getProjects(): Subject<Array<Project>> {
@@ -33,7 +35,6 @@ export class Wage3Service {
       if (!error) {
         this.projects.next(
           result.map((project) => {
-            debugger;
             let projectMapped = this.mapProject(project);
             return projectMapped;
           })
@@ -46,7 +47,10 @@ export class Wage3Service {
   }
 
   async loanProject(projectId: number, amount: number) {
-    const amountToSend = this.web3.utils.toWei(amount as any, 'ether');
+    const amountToSend = this.web3.utils.toWei(
+      this.web3.utils.toBN(amount),
+      'ether'
+    );
 
     const gasAmount = await this.contract.methods
       .loanProject(projectId, amount)
