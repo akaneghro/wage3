@@ -3,7 +3,6 @@ import { Project } from '../models/project';
 import { Observable, Subject, of } from 'rxjs';
 import * as Wage3AbiContract from '../contracts/Wage3.json';
 import Web3 from 'web3';
-import { Web3Service } from './web3.service';
 import moment from 'moment';
 
 @Injectable({
@@ -126,15 +125,19 @@ export class Wage3Service {
   }
 
   async loanProject(projectId: number, amount: number) {
-    this.contract.methods
+    const amountToSend = this.web3.utils.toWei(amount as any, 'ether');
+
+    const gasAmount = await this.contract.methods
       .loanProject(projectId, amount)
-      .send({ from: this.address }, (error, transactionHash) => {
-        if (!error) {
-          console.log(`Transacción enviada: ${transactionHash}`);
-        } else {
-          console.error(error);
-        }
-      });
+      .estimateGas({ from: this.address })
+      .then((gasAmount) => gasAmount);
+
+    return this.contract.methods.loanProject(projectId, amount).send(
+      { from: this.address, value: amountToSend, gas: gasAmount * 2 }, //TO-DO AVERIGUAR BIEN EL COSTE DEL GAS
+      () => {
+        console.log('Transacción enviada');
+      }
+    );
   }
 
   async claimLoanWithInterest(projectId: number) {
