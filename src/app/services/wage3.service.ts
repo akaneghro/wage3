@@ -1,14 +1,38 @@
 import { Injectable } from '@angular/core';
 import { Project } from '../models/project';
 import { Observable, Subject, of } from 'rxjs';
+import * as Wage3AbiContract from '../contracts/Wage3.json';
+import Web3 from 'web3';
+import { Web3Service } from './web3.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Wage3Service {
+  private web3: Web3;
+  private webAbiContract: any = Wage3AbiContract;
+  private contract: any;
+
   constructor() {}
 
+  initService(web3: Web3) {
+    this.web3 = web3;
+    this.contract = new this.web3.eth.Contract(
+      this.webAbiContract.default.abi,
+      this.webAbiContract.default.contract
+    );
+  }
+
   getOpenProjects(): Observable<Array<Project>> {
+    this.contract.methods.getProjects().call((error, result) => {
+      if (!error) {
+        const project = result; // El resultado es un objeto con las propiedades del struct
+        console.log(project); // Haz algo con el struct devuelto
+      } else {
+        console.error(error);
+      }
+    });
+
     const projects: Project[] = <Array<Project>>[
       <Project>{
         title: 'Ampliar el almacén',
