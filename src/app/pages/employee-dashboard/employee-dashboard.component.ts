@@ -5,6 +5,7 @@ import { DashboardData } from 'src/app/models/dashboard-data';
 import { Project } from 'src/app/models/project';
 import { Wage3Service } from 'src/app/services/wage3.service';
 import { Web3Service } from 'src/app/services/web3.service';
+import moment from 'moment';
 
 @Component({
   selector: 'wage3-employee-dashboard',
@@ -13,6 +14,7 @@ import { Web3Service } from 'src/app/services/web3.service';
 })
 export class EmployeeDashboardComponent implements OnInit {
   public openProjects: Array<Project>;
+  public completedProjects: Array<Project>;
   public supportedProjects: Array<Project>;
   public typeOfMainTabSelected: TypesOfMainTab;
   TypesOfMainTab = TypesOfMainTab;
@@ -32,9 +34,15 @@ export class EmployeeDashboardComponent implements OnInit {
       await this.web3Service.switchNetwork('0x13881');
       this.wage3Service.initService(await this.web3Service.getWeb3());
       this.wage3Service.getProjects().subscribe((projects) => {
-        debugger;
         if (projects) {
-          this.openProjects = projects;
+          this.completedProjects = projects.filter(
+            (project) =>
+              moment(project.startDate).isBefore(moment()) &&
+              moment(project.endDate).isAfter(moment())
+          );
+          this.openProjects = projects.filter((project) =>
+            moment(project.startDate).isAfter(moment())
+          );
         }
       });
     });
@@ -56,20 +64,6 @@ export class EmployeeDashboardComponent implements OnInit {
         .then((balance) => {
           this.dashboardData.currentBalance = balance as any;
         });
-    });
-  }
-
-  getSupportedProjects() {
-    this.wage3Service
-      .getSupportedProjectsByTheEmployee()
-      .subscribe((projects) => {
-        this.supportedProjects = projects;
-      });
-  }
-
-  getOpenProjects() {
-    this.wage3Service.getOpenProjects().subscribe((projects) => {
-      this.openProjects = projects;
     });
   }
 

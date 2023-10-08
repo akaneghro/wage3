@@ -29,99 +29,20 @@ export class Wage3Service {
   }
 
   getProjects(): Subject<Array<Project>> {
-    return this.projects;
-  }
-  getOpenProjects(): Observable<Array<Project>> {
     this.contract.methods.getProjects().call((error, result) => {
-      debugger;
       if (!error) {
-        const project = result; // El resultado es un objeto con las propiedades del struct
-        result.map((project) => this.mapProject(project));
-        console.log(project); // Haz algo con el struct devuelto
+        this.projects.next(
+          result.map((project) => {
+            debugger;
+            let projectMapped = this.mapProject(project);
+            return projectMapped;
+          })
+        );
       } else {
         console.error(error);
       }
     });
-
-    const projects: Project[] = <Array<Project>>[
-      <Project>{
-        title: 'Ampliar el almacén',
-        startDate: new Date(2024, 1, 14),
-        endDate: new Date(2025, 1, 1),
-        amountProposed: 50000,
-        amountAchieved: 13000,
-        interestRate: 5,
-        ownerAddress: '0x23d902C743C8bF187659dC7107263de429DE9832',
-      },
-      <Project>{
-        title: 'Crear una nueva línea de distribución',
-        startDate: new Date(2023, 11, 1),
-        endDate: new Date(2025, 1, 13),
-        amountProposed: 150000,
-        amountAchieved: 10000,
-        interestRate: 4,
-        ownerAddress: '0x23d902C743C8bF187659dC7107263de429DE9832',
-      },
-      <Project>{
-        title: 'Expandir el negocio a Asia',
-        startDate: new Date(2023, 12, 1),
-        endDate: new Date(2026, 1, 23),
-        amountProposed: 250000,
-        amountAchieved: 250000,
-        interestRate: 3,
-        ownerAddress: '0x23d902C743C8bF187659dC7107263de429DE9832',
-      },
-    ];
-    return of(projects);
-  }
-
-  getCompanyRunningProjects(): Observable<Array<Project>> {
-    const projects: Project[] = <Array<Project>>[
-      <Project>{
-        title: 'Ampliar el almacén',
-        startDate: new Date(2024, 1, 14),
-        endDate: new Date(2025, 1, 1),
-        amountProposed: 50000,
-        amountAchieved: 13000,
-        interestRate: 5,
-        ownerAddress: '0x23d902C743C8bF187659dC7107263de429DE9832',
-      },
-      <Project>{
-        title: 'Crear una nueva línea de distribución',
-        startDate: new Date(2023, 11, 1),
-        endDate: new Date(2025, 1, 13),
-        amountProposed: 150000,
-        amountAchieved: 10000,
-        interestRate: 4,
-        ownerAddress: '0x23d902C743C8bF187659dC7107263de429DE9832',
-      },
-      <Project>{
-        title: 'Expandir el negocio a Asia',
-        startDate: new Date(2023, 12, 1),
-        endDate: new Date(2026, 1, 23),
-        amountProposed: 250000,
-        amountAchieved: 250000,
-        interestRate: 3,
-        ownerAddress: '0x23d902C743C8bF187659dC7107263de429DE9832',
-      },
-    ];
-    return of(projects);
-  }
-
-  getSupportedProjectsByTheEmployee(): Observable<Array<Project>> {
-    const projects: Project[] = <Array<Project>>[
-      <Project>{
-        title: 'Lo que apoya el empleado',
-        startDate: new Date(2024, 1, 1),
-        endDate: new Date(2025, 1, 1),
-        amountProposed: 50000,
-        amountAchieved: 50000,
-        amountLoaned: 2500,
-        interestRate: 5,
-        ownerAddress: '0x23d902C743C8bF187659dC7107263de429DE9832',
-      },
-    ];
-    return of(projects);
+    return this.projects;
   }
 
   async loanProject(projectId: number, amount: number) {
@@ -171,8 +92,8 @@ export class Wage3Service {
       description: data[2],
       amountProposed: data[3],
       interestRate: data[4],
-      startDate: moment(data[5]).toDate(),
-      endDate: moment(data[6]).toDate(),
+      startDate: moment.unix(data[5]).toDate(),
+      endDate: moment.unix(data[6]).toDate(),
       state: data[7],
       addresses: data[8],
     };

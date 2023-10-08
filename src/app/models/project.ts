@@ -1,7 +1,7 @@
 import { ProjectState } from '../enums/project-states';
 
 export interface Project {
-  id: string;
+  id: number;
   title: string;
   image: string;
   description: string;
