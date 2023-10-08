@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Project } from '../models/project';
 import { Observable, Subject, of } from 'rxjs';
 import * as Wage3AbiContract from '../contracts/Wage3.json';
+import * as PriceFeedAbiContract from '../contracts/Wage3.json';
 import Web3 from 'web3';
 import moment from 'moment';
 import { AddressAmount } from '../models/address-amount';
@@ -12,8 +13,10 @@ import { AddressAmount } from '../models/address-amount';
 export class Wage3Service {
   private web3: Web3;
   private webAbiContract: any = Wage3AbiContract;
+  private priceFeedAbiContract: any = PriceFeedAbiContract;
   private contract: any;
   private address: string;
+  private priceFeed: any;
   private projects: Subject<Array<Project>> = new Subject<Array<Project>>();
 
   constructor() {}
@@ -27,6 +30,10 @@ export class Wage3Service {
     this.web3.eth.getAccounts().then((accounts) => {
       this.address = accounts[0];
     });
+    this.priceFeed = new this.web3.eth.Contract(
+      this.priceFeedAbiContract.default.abi,
+      this.priceFeedAbiContract.default.contract
+    );
   }
 
   getProjects(): Subject<Array<Project>> {
@@ -85,6 +92,16 @@ export class Wage3Service {
         } else {
           console.error(error);
         }
+      });
+  }
+
+  async getMaticPrice() {
+    return this.priceFeed.methods
+      .getLatestPrice()
+      .call()
+      .then((roundData) => {
+        console.log(roundData);
+        return roundData;
       });
   }
 

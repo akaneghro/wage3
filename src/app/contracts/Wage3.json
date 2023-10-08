@@ -1,5 +1,5 @@
 {
-  "contract": "0x6E4d4525c3b6579e00fFC6da17CB58cA17548AC5",
+  "contract": "0x7620525A166DA0844275eedd6d8b134023963442",
   "abi": [
     {
       "inputs": [
@@ -269,6 +269,19 @@
     {
       "inputs": [],
       "name": "getTotalFinancedByEmployee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MINIMUM_USD",
       "outputs": [
         {
           "internalType": "uint256",
