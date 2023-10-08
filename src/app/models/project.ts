@@ -1,4 +1,5 @@
 import { ProjectState } from '../enums/project-states';
+import { AddressAmount } from './address-amount';
 
 export interface Project {
   id: number;
@@ -15,5 +16,5 @@ export interface Project {
   ownerAddress: string;
   loanerAddress: string;
   state: ProjectState;
-  addresses: Array<string>;
+  addressesAndAmounts: Array<AddressAmount>;
 }

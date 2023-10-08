@@ -27,6 +27,7 @@ export class EmployeeDashboardComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.dashboardData = <DashboardData>{};
     this.typeOfUser = TypesOfUser.Employee;
     this.typeOfMainTabSelected = TypesOfMainTab.Dashboard;
     this.web3Service.web3Loaded.subscribe(async (ok) => {
@@ -40,6 +41,16 @@ export class EmployeeDashboardComponent implements OnInit {
               moment(project.startDate).isBefore(moment()) &&
               moment(project.endDate).isAfter(moment())
           );
+          this.supportedProjects = projects.filter((project) => {
+            return (
+              moment(project.startDate).isBefore(moment()) &&
+              moment(project.endDate).isAfter(moment())
+            );
+          });
+          debugger;
+          this.dashboardData.supportingAmount = this.supportedProjects
+            .map((project) => project.amountLoaned)
+            .reduce((a, b) => a + b);
           this.openProjects = projects.filter((project) =>
             moment(project.startDate).isAfter(moment())
           );
@@ -49,18 +60,18 @@ export class EmployeeDashboardComponent implements OnInit {
   }
 
   async setupDashboardData() {
-    this.dashboardData = <DashboardData>{
-      supportingAmount: 8500,
-      numberOfSupportedProjects: 2,
-      numberOfCompletedProjects: 0,
-      numberOfOpenProjects: 5,
-      earnedToday: 50.45,
-    };
+    // this.dashboardData = <DashboardData>{
+    //   supportingAmount: 8500,
+    //   numberOfSupportedProjects: 2,
+    //   numberOfCompletedProjects: 0,
+    //   numberOfOpenProjects: 5,
+    //   earnedToday: 50.45,
+    // };
 
     this.web3Service.getAccounts().then((accounts) => {
       this.dashboardData.address = accounts[0];
       this.web3Service
-        .getBalance(this.dashboardData.address)
+        .getBalanceInEth(this.dashboardData.address)
         .then((balance) => {
           this.dashboardData.currentBalance = balance as any;
         });
