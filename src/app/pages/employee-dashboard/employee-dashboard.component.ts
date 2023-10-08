@@ -66,20 +66,13 @@ export class EmployeeDashboardComponent implements OnInit {
   }
 
   async setupDashboardData() {
-    // this.dashboardData = <DashboardData>{
-    //   supportingAmount: 8500,
-    //   numberOfSupportedProjects: 2,
-    //   numberOfCompletedProjects: 0,
-    //   numberOfOpenProjects: 5,
-    //   earnedToday: 50.45,
-    // };
-
     this.web3Service.getAccounts().then((accounts) => {
       this.dashboardData.address = accounts[0];
       this.web3Service
         .getBalanceInEth(this.dashboardData.address)
         .then((balance) => {
-          this.dashboardData.currentBalance = balance as any;
+          let balanceByThousand = parseInt(balance) * 1000;
+          this.dashboardData.currentBalance = balanceByThousand;
         });
     });
   }

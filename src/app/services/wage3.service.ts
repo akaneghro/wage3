@@ -57,10 +57,11 @@ export class Wage3Service {
       .loanProject(projectId, amountToSend)
       .send(
         { from: this.address, value: amountToSend, gas: gasAmount * 2 },
-        () => {
-          console.log('Transacción enviada');
-        }
-      );
+        () => {}
+      )
+      .on('confirmation', function () {
+        window.location.reload();
+      });
   }
 
   async claimLoanWithInterest(projectId: number) {
