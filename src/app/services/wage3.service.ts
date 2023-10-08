@@ -113,4 +113,40 @@ export class Wage3Service {
     ];
     return of(projects);
   }
+
+  async loanProject(projectId: number, amount: number) {
+    this.contract.methods
+      .loanProject(projectId, amount)
+      .send({ from: fromAccount }, (error, transactionHash) => {
+        if (!error) {
+          console.log(`Transacción enviada: ${transactionHash}`);
+        } else {
+          console.error(error);
+        }
+      });
+  }
+
+  async claimLoanWithInterest(projectId: number) {
+    this.contract.methods
+      .claimLoanWithInterest(projectId)
+      .send({ from: fromAccount }, (error, transactionHash) => {
+        if (!error) {
+          console.log(`Transacción enviada: ${transactionHash}`);
+        } else {
+          console.error(error);
+        }
+      });
+  }
+
+  async claimLoanWithoutInterest(projectId: number) {
+    this.contract.methods
+      .claimLoanWithoutInterest(projectId)
+      .send({ from: fromAccount }, (error, transactionHash) => {
+        if (!error) {
+          console.log(`Transacción enviada: ${transactionHash}`);
+        } else {
+          console.error(error);
+        }
+      });
+  }
 }

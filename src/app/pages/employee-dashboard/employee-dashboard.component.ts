@@ -62,6 +62,28 @@ export class EmployeeDashboardComponent implements OnInit {
     });
   }
 
+  loanProject(projectId: number, amount: number) {
+    this.wage3Service.loanProject(projectId, amount).then((transactionHash) => {
+      console.log(transactionHash);
+    });
+  }
+
+  claimLoanWithInterest(projectId: number) {
+    this.wage3Service
+      .claimLoanWithInterest(projectId)
+      .then((transactionHash) => {
+        console.log(transactionHash);
+      });
+  }
+
+  claimLoanWithoutInterest(projectId: number) {
+    this.wage3Service
+      .claimLoanWithoutInterest(projectId)
+      .then((transactionHash) => {
+        console.log(transactionHash);
+      });
+  }
+
   changeInMainTab(newType: TypesOfMainTab) {
     this.typeOfMainTabSelected = newType;
   }
