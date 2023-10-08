@@ -11,10 +11,11 @@ pragma solidity ^0.8.0;
     * @author bertoaf
  */
 contract Wage3 {
-
     address public owner;
 
     uint256 private _counter;
+
+    uint256 public constant MINIMUM_USD = 50 * 10 ** 18;
 
     enum ProjectState {
         INACTIVE,
@@ -54,7 +55,6 @@ contract Wage3 {
         createMockProject("International Expansion", "Prject1", 1000000000000000000, 4, 1690858139, 1693536539, 1696128539);
         createMockProject("Renewable Energies", "Project2", 12000000000000000000, 5, 1696128539, 1697770139, 1703821739);
         createMockProject("Research and development", "Project4", 15000000000000000000, 3, 1692931739, 1695610139, 1696042139);
-        createMockProject("Software development", "Project5", 2500000000000000000, 7, 1693536539, 1698810539, 1701402539);
     }
 
     modifier onlyOwner() {
@@ -258,17 +258,6 @@ contract Wage3 {
         * Sum the amount sent from employee to the amount in the specified proyect in te projects array
         * @param _projectId The id of the project
     */
-    function addEmployeeToProjects(uint256 _projectId, uint256 _amount) private {
-        for (uint256 i = 0; i < projects.length; i++) {
-            if (projects[i].id == _projectId) {
-                projects[i].employees.push(Employee({
-                    employeeAddress: msg.sender,
-                    amount: _amount
-                }));
-            }
-        }
-    }
-
     function addEmployeeAmountToProjects(uint256 _projectId, uint256 _amount) private {
         for (uint256 i = 0; i < projects.length; i++) {
             if (projects[i].id == _projectId) {
@@ -280,6 +269,24 @@ contract Wage3 {
             }
         }
     }
+
+    /**
+        * Add an employee to a proyect
+        * @param _projectId The id of the project
+        * @param _amount The amount that the employee loans
+    */
+    function addEmployeeToProjects(uint256 _projectId, uint256 _amount) private {
+        for (uint256 i = 0; i < projects.length; i++) {
+            if (projects[i].id == _projectId) {
+                projects[i].employees.push(Employee({
+                    employeeAddress: msg.sender,
+                    amount: _amount
+                }));
+            }
+        }
+    }
+
+
 
 
 
