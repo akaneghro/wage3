@@ -15,6 +15,7 @@ import { MainCardComponent } from './components/main-card/main-card.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { ProjectsTabComponent } from './components/projects-tab/projects-tab.component';
 import { FormsModule } from '@angular/forms';
+import { RedirectGuard } from './guards/redirect-guard';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { FormsModule } from '@angular/forms';
     ProjectsTabComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule],
-  providers: [],
+  providers: [RedirectGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
